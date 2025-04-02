@@ -1,4 +1,4 @@
-module github.com/google/huproxy
+module github.com/NicoBiernat/huproxy
 
 go 1.16
 
