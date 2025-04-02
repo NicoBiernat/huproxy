@@ -20,7 +20,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
@@ -54,7 +53,7 @@ func secretString(s string) (string, error) {
 		if p&0177 > 0 {
 			return "", fmt.Errorf("valid permissions for %q is %0o, was %0o", fn, 0600, p)
 		}
-		b, err := ioutil.ReadFile(fn)
+		b, err := os.ReadFile(fn)
 		return strings.TrimSpace(string(b)), err
 	}
 	return s, nil
@@ -64,7 +63,7 @@ func dialError(url string, resp *http.Response, err error) {
 	if resp != nil {
 		extra := ""
 		if *verbose {
-			b, err := ioutil.ReadAll(resp.Body)
+			b, err := io.ReadAll(resp.Body)
 			if err != nil {
 				log.Warningf("Failed to read HTTP body: %v", err)
 			}
